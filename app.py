@@ -7,6 +7,8 @@ from flask import Flask, request, flash, make_response, render_template, redirec
 from werkzeug.exceptions import HTTPException
 
 from book_management import search_books, get_book_details
+# focusing on implementing these three functions (add user, username available and get user with credentials)
+# need to go to the user management file
 from user_management import add_user, username_available, get_user_with_credentials, search_users, get_user_details
 from follower_management import add_follower_pair, remove_follower_pair
 from rating_management import get_recent_book_ratings, get_recent_user_ratings, get_recent_follower_ratings, \

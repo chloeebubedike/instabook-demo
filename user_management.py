@@ -8,9 +8,13 @@ def add_user(username, display_name, pin):
     """
     with get_db_connection() as connection:
         with connection.cursor() as cursor:
-            # Temporary code
-            pass
+            cursor.execute("""INSERT INTO users (username, display_name, pin)
+                               VALUES (%s, %s, %s);""", (username, display_name, pin))
+            # at this stage we can either commit or roll back
+            connection.commit()
 
+
+# add_user('chloe', 'chloee', '1234')
 
 def username_available(username):
     """
@@ -19,8 +23,17 @@ def username_available(username):
     """
     with get_db_connection() as connection:
         with connection.cursor() as cursor:
-            # Temporary code
-            return False if username in ['somebody', 'somebodyelse'] else True
+            cursor.execute("""SELECT *
+                              FROM users u
+                              WHERE u.username = %s;""", (username,))
+            results = cursor.fetchall()
+            if len(results) > 0:
+                return False
+            else:
+                return True
+
+
+print(username_available('emily'))
 
 
 def get_user_with_credentials(username, pin):
